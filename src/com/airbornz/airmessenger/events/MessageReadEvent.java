@@ -21,6 +21,10 @@ public class MessageReadEvent extends Event implements Cancellable {
         this.message = message;
     }
 
+    /**
+     * Get the message of the event.
+     * @return The message of the event.
+     */
     public Message getMessage(){
         return message;
     }

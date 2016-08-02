@@ -1,10 +1,7 @@
 package com.airbornz.airmessenger;
 
+import com.airbornz.airmessenger.storage.MessageStorage;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Airbornz
@@ -13,13 +10,10 @@ import java.util.UUID;
  */
 public class AirMessenger extends JavaPlugin{
 
-    private static List<MessengerAccount> accounts = new ArrayList<>();
+    private static MessageStorage messageStorage;
 
     @Override
     public void onEnable(){
-        if (accounts != null){
-            //TODO GET SAVED EMAIL ACCOUNTS
-        }
         //TODO Enable plugin
     }
 
@@ -28,14 +22,34 @@ public class AirMessenger extends JavaPlugin{
         //TODO Disable plugin
     }
 
-    public static MessengerAccount getAccount(UUID uuid){
-        for (MessengerAccount account : accounts){
-            if (account.getOwner().equals(uuid))
-                return account;
-        }
-        MessengerAccount account = new MessengerAccount(uuid, new ArrayList<>());
-        accounts.add(account);
-        return account;
+    /**
+     * Get the current MessageStorage.
+     * @return The current MessageStorage.
+     */
+    public static MessageStorage getMessageStorage(){return messageStorage;}
+
+    /**
+     * Set the current MessageStorage.
+     * Useful if you want to make your own.
+     * Inconsistently changing this is not recommended!
+     * @param storage The storage to now use.
+     */
+    public static void setMessageStorage(MessageStorage storage){
+        messageStorage.saveData();
+        messageStorage = storage;
+    }
+
+    /**
+     * Set the current MessageStorage.
+     * Useful if you want to make your own.
+     * Inconsistently changing this is not recommended!
+     * @param storage The storage to now use.
+     * @param saveData If the current MessageStorage should be saved.
+     */
+    public static void setMessageStorage(MessageStorage storage, boolean saveData){
+        if (saveData)
+            messageStorage.saveData();
+        messageStorage = storage;
     }
 
 }

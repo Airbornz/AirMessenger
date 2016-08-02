@@ -24,10 +24,18 @@ public class MessageSentEvent extends Event implements Cancellable {
         this.forced = forced;
     }
 
+    /**
+     * Get the message of the event.
+     * @return The message of the event.
+     */
     public Message getMessage(){
         return message;
     }
 
+    /**
+     * Get if this message bypasses cancellation.
+     * @return If this message bypasses cancellation.
+     */
     public boolean wasForced(){
         return forced;
     }
